@@ -27,7 +27,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JukeBox" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ob3-Tp-t2e">
                                 <rect key="frame" x="89.333333333333329" y="330" width="214.33333333333337" height="75.333333333333314"/>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="64"/>
-                                <color key="textColor" red="0.97934263939999999" green="0.37119579320000001" blue="0.58868837360000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.32956659789999998" green="0.75292831660000004" blue="0.9196457267" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter your name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zZU-7B-0jV">
@@ -41,10 +41,11 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5GM-RB-VOa">
                                 <rect key="frame" x="159" y="565.33333333333337" width="75" height="50"/>
-                                <color key="backgroundColor" red="0.97934263939999999" green="0.37119579320000001" blue="0.58868837360000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.32956659789999998" green="0.75292831660000004" blue="0.9196457267" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="muK-yd-NHn"/>
                                 </constraints>
+                                <color key="tintColor" name="LoginScreen"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                 <connections>
@@ -355,6 +356,9 @@
         <image name="volume.fill" catalog="system" width="128" height="125"/>
         <namedColor name="ButtonsColor">
             <color red="0.40435521122295304" green="0.67699796180324379" blue="0.92958885732323226" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LoginScreen">
+            <color red="0.32956659789999998" green="0.75292831660000004" blue="0.9196457267" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

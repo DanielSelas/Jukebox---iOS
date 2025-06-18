@@ -56,23 +56,21 @@ class LoginViewController: UIViewController {
 
     func styleJukeboxLabel() {
         jukeboxLabel.text = "Jukebox"
-        jukeboxLabel.textColor = UIColor.systemPink
         jukeboxLabel.font = UIFont(name: "SnellRoundhand-Bold", size: 58) ?? UIFont.systemFont(ofSize: 48, weight: .bold)
-        jukeboxLabel.layer.shadowColor = UIColor.systemPink.cgColor
-        jukeboxLabel.layer.shadowRadius = 8
-        jukeboxLabel.layer.shadowOpacity = 1.0
+        jukeboxLabel.layer.shadowColor = UIColor.white.cgColor
+        jukeboxLabel.layer.shadowRadius = 10
+        jukeboxLabel.layer.shadowOpacity = 3.0
         jukeboxLabel.layer.shadowOffset = .zero
     }
 
     func styleNeonTextField() {
         nameField.placeholder = "What's your name?"
         nameField.textColor = .white
-        nameField.tintColor = .systemPink
         nameField.backgroundColor = UIColor.white.withAlphaComponent(0.1)
-        nameField.layer.cornerRadius = 30
-        nameField.layer.borderColor = UIColor.systemPink.cgColor
+        nameField.layer.cornerRadius = 25
+        nameField.layer.borderColor = UIColor.loginScreen.cgColor
         nameField.layer.borderWidth = 1.5
-        nameField.layer.shadowColor = UIColor.systemPink.cgColor
+        nameField.layer.shadowColor = UIColor.white.cgColor
         nameField.layer.shadowRadius = 4
         nameField.layer.shadowOpacity = 0.8
         nameField.layer.shadowOffset = .zero
@@ -87,7 +85,7 @@ class LoginViewController: UIViewController {
         startButton.setTitleColor(.white, for: .normal)
         startButton.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         
-        startButton.layer.cornerRadius = 30
+        startButton.layer.cornerRadius = 25
         startButton.clipsToBounds = true
 
         let gradient = CAGradientLayer()
@@ -102,9 +100,11 @@ class LoginViewController: UIViewController {
         startButton.layer.insertSublayer(gradient, at: 0)
 
         startButton.layer.shadowColor = UIColor.white.cgColor
-        startButton.layer.shadowRadius = 12
-        startButton.layer.shadowOpacity = 1
+        startButton.layer.shadowRadius = 10
+        startButton.layer.shadowOpacity = 3.0
         startButton.layer.shadowOffset = .zero
+        
+        
     }
 }
 
