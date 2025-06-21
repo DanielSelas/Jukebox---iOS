@@ -7,7 +7,9 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
 
     private var buttonGradientLayer: CAGradientLayer?
-
+    private var glowBorderLayer: CAShapeLayer?
+    private var gradientLayer: CAGradientLayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,15 +32,22 @@ class LoginViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-           if let gradient = buttonGradientLayer {
-               gradient.frame = startButton.bounds
-               let shape = CAShapeLayer()
-               shape.lineWidth = 2
-               shape.path = UIBezierPath(roundedRect: startButton.bounds, cornerRadius: startButton.layer.cornerRadius).cgPath
-               shape.fillColor = UIColor.clear.cgColor
-               shape.strokeColor = UIColor.white.withAlphaComponent(0.8).cgColor
-               gradient.mask = shape
-           }
+
+        if let gradient = buttonGradientLayer {
+            gradient.frame = startButton.bounds
+            gradient.cornerRadius = startButton.bounds.height / 2
+
+            let shape = CAShapeLayer()
+            shape.lineWidth = 2
+            shape.path = UIBezierPath(roundedRect: startButton.bounds, cornerRadius: startButton.layer.cornerRadius).cgPath
+            shape.fillColor = UIColor.clear.cgColor
+            shape.strokeColor = UIColor.white.withAlphaComponent(0.8).cgColor
+            gradient.mask = shape
+        }
+
+        if let glow = glowBorderLayer {
+            glow.path = UIBezierPath(roundedRect: startButton.bounds, cornerRadius: startButton.layer.cornerRadius).cgPath
+        }
     }
 
     func setupGradientBackground() {
@@ -66,9 +75,9 @@ class LoginViewController: UIViewController {
     func styleNeonTextField() {
         nameField.placeholder = "What's your name?"
         nameField.textColor = .white
-        nameField.backgroundColor = UIColor.white.withAlphaComponent(0.1)
-        nameField.layer.cornerRadius = 25
-        nameField.layer.borderColor = UIColor.loginScreen.cgColor
+        nameField.layer.cornerRadius = 30
+        nameField.backgroundColor = UIColor.loginScreen.withAlphaComponent(CGFloat(0.8))
+        nameField.layer.borderColor = UIColor.clear.cgColor
         nameField.layer.borderWidth = 1.5
         nameField.layer.shadowColor = UIColor.white.cgColor
         nameField.layer.shadowRadius = 4
@@ -82,29 +91,25 @@ class LoginViewController: UIViewController {
     
     func styleNeonButton() {
         startButton.setTitle("Start Listening", for: .normal)
-        startButton.setTitleColor(.white, for: .normal)
-        startButton.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        
-        startButton.layer.cornerRadius = 25
-        startButton.clipsToBounds = true
+         startButton.setTitleColor(.white, for: .normal)
+         startButton.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
 
-        let gradient = CAGradientLayer()
-        gradient.colors = [
-            UIColor.systemPink.cgColor,
-            UIColor.systemPurple.cgColor
-        ]
-        gradient.startPoint = CGPoint(x: 0, y: 0.5)
-        gradient.endPoint = CGPoint(x: 1, y: 0.5)
-        gradient.cornerRadius = 30
-        buttonGradientLayer = gradient
-        startButton.layer.insertSublayer(gradient, at: 0)
+         startButton.layer.cornerRadius = startButton.bounds.height / 2
+         startButton.clipsToBounds = true
 
-        startButton.layer.shadowColor = UIColor.white.cgColor
-        startButton.layer.shadowRadius = 10
-        startButton.layer.shadowOpacity = 3.0
-        startButton.layer.shadowOffset = .zero
-        
-        
+         gradientLayer = CAGradientLayer()
+         gradientLayer?.colors = [UIColor.loginScreen.cgColor, UIColor.loginScreen.cgColor]
+         gradientLayer?.startPoint = CGPoint(x: 0, y: 0.5)
+         gradientLayer?.endPoint = CGPoint(x: 1, y: 0.5)
+
+         glowBorderLayer = CAShapeLayer()
+         glowBorderLayer?.fillColor = UIColor.clear.cgColor
+         glowBorderLayer?.strokeColor = UIColor.white.cgColor
+         glowBorderLayer?.lineWidth = 2
+         glowBorderLayer?.shadowColor = UIColor.systemPink.cgColor
+         glowBorderLayer?.shadowRadius = 8
+         glowBorderLayer?.shadowOpacity = 1.0
+         glowBorderLayer?.shadowOffset = .zero
     }
 }
 

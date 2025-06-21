@@ -1,79 +1,173 @@
 import UIKit
 import FirebaseDatabase
 
-class RoomViewController: UIViewController{
-    
-    @IBOutlet weak var addSong: UIButton!
+class PlaylistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    var dbRef: DatabaseReference!
-    var songs: [Song] = []
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var playlists: [Playlist] = []
+      var allSongs: [Song] = []
+
+      override func viewDidLoad() {
+          super.viewDidLoad()
+          tableView.delegate = self
+          tableView.dataSource = self
+
+          loadPlaylistsAndSongs()
+      }
+
+      // MARK: - Load Playlists
+      func loadPlaylistsAndSongs() {
+          let dbRef = Database.database().reference()
+
+          dbRef.child("playlists").observeSingleEvent(of: .value) { snapshot in
+              var loadedPlaylists: [Playlist] = []
+
+              for child in snapshot.children {
+                  if let snap = child as? DataSnapshot,
+                     let dict = snap.value as? [String: Any],
+                     let name = dict["name"] as? String,
+                     let imageName = dict["imageName"] as? String {
+
+                      var songs: [Song] = []
+                      if let songDicts = dict["songs"] as? [[String: Any]] {
+                          for songDict in songDicts {
+                              if let title = songDict["title"] as? String,
+                                 let artist = songDict["artist"] as? String,
+                                 let imageURL = songDict["imageURL"] as? String,
+                                 let duration = songDict["duration"] as? TimeInterval,
+                                 let audioURL = songDict["audioURL"] as? String {
+                                  let song = Song(title: title, artist: artist, imageURL: imageURL, duration: duration, audioURL: audioURL)
+                                  songs.append(song)
+                              }
+                          }
+                      }
+
+                      let playlist = Playlist(name: name, imageName: imageName, songs: songs)
+                      loadedPlaylists.append(playlist)
+                  }
+              }
+
+              self.playlists = loadedPlaylists
+              print("✅ Loaded \(self.playlists.count) playlists")
+              self.loadSongsAndDistribute()
+          }
+      }
+
+      // MARK: - Load Songs
+      func loadSongsAndDistribute() {
+          let dbRef = Database.database().reference().child("Library")
+
+          dbRef.observeSingleEvent(of: .value) { snapshot in
+              var loadedSongs: [Song] = []
+
+              for child in snapshot.children {
+                  if let snap = child as? DataSnapshot,
+                     let dict = snap.value as? [String: Any],
+                     let title = dict["title"] as? String,
+                     let artist = dict["artist"] as? String,
+                     let imageURL = dict["imageURL"] as? String,
+                     let duration = dict["duration"] as? Int,
+                     let audioURL = dict["audioURL"] as? String {
+                      
+                      let song = Song(title: title, artist: artist, imageURL: imageURL, duration: TimeInterval(duration), audioURL: audioURL)
+                      loadedSongs.append(song)
+                  }
+              }
+
+              self.allSongs = loadedSongs
+              print("✅ Loaded \(self.allSongs.count) songs from Firebase")
+              self.distributeSongsToPlaylists()
+          }
+      }
+
+      // MARK: - Distribute songs across playlists
+      func distributeSongsToPlaylists() {
+          guard !allSongs.isEmpty else { return }
+          guard !playlists.isEmpty else { return }
+
+          for playlist in playlists {
+              playlist.songs.removeAll()  // Clean before refill
+          }
+
+          for (i, song) in allSongs.enumerated() {
+              let index = i % playlists.count
+              playlists[index].addSong(song)
+          }
+
+          print("✅ Distributed songs into playlists")
+
+          savePlaylistsToFirebase()
+          tableView.reloadData()
+      }
+
+      // MARK: - Save updated playlists to Firebase
+      func savePlaylistsToFirebase() {
+          let ref = Database.database().reference().child("playlists")
+          ref.removeValue { error, _ in
+              guard error == nil else {
+                  print("❌ Failed to clear playlists: \(error!.localizedDescription)")
+                  return
+              }
+
+              for playlist in self.playlists {
+                  let dict = playlist.toDictionary()
+                  ref.childByAutoId().setValue(dict)
+              }
+
+              print("✅ Playlists saved to Firebase")
+          }
+      }
+
+      // MARK: - Table View
+      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+          return playlists.count
+      }
+
+      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+          let playlist = playlists[indexPath.row]
+          let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistCell
+
+          cell.playlistNameLabel.text = playlist.name
+          cell.numberOfSongsLabel.text = "\(playlist.songs.count) songs"
+
+          if let url = URL(string: playlist.imageName),
+             let data = try? Data(contentsOf: url),
+             let image = UIImage(data: data) {
+              cell.playlistImageView.image = image
+          } else {
+              cell.playlistImageView.image = UIImage(named: "defaultPlaylistImage")
+          }
+
+          cell.playButton.tag = indexPath.row
+          cell.expandButton.tag = indexPath.row
+
+          cell.playButton.addTarget(self, action: #selector(playPlaylist(_:)), for: .touchUpInside)
+          cell.expandButton.addTarget(self, action: #selector(expandPlaylist(_:)), for: .touchUpInside)
+
+          return cell
+      }
+
+      // MARK: - Button Actions
+      @objc func playPlaylist(_ sender: UIButton) {
+          let playlist = playlists[sender.tag]
+          print("▶️ Playing \(playlist.name)")
+      }
+
+    @objc func expandPlaylist(_ sender: UIButton) {
+        let playlist = playlists[sender.tag]
         
-        //Song from RealtimeDB
-        dbRef = Database.database().reference()
-        
-        //Table View
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        //               observeSongs()
-    }
-    
-    
-    // Add Song to DB
-    @IBAction func addSongTapped(_ sender: UIButton) {
-        let song = [
-            "title": "Let It Happen",
-            "artist": "Tame Impala"
-        ]
-        
-        dbRef.child("songs").childByAutoId().setValue(song) { error, _ in
-            if let error = error {
-                print("❌ Error saving song: \(error.localizedDescription)")
-            } else {
-                print("✅ Song saved successfully!")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let detailVC = storyboard.instantiateViewController(withIdentifier: "PlaylistDetailViewController") as? PlaylistDetailViewController {
+            
+            detailVC.modalPresentationStyle = .pageSheet
+            detailVC.songs = playlist.songs
+            detailVC.playlistName = playlist.name
+            
+            if let sheet = detailVC.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
             }
+            
+            present(detailVC, animated: true)
         }
-    }
-    
-    
-    
-    
-    //    func observeSongs() {
-    //        dbRef.child("songs").observe(.value) { snapshot in
-    //            var newSongs: [Song] = []
-    //
-    //            for child in snapshot.children {
-    //                if let snap = child as? DataSnapshot,
-    //                   let dict = snap.value as? [String: Any],
-    //                   let title = dict["title"] as? String,
-    //                   let artist = dict["artist"] as? String {
-    //                    newSongs.append(Song(title: title, artist: artist, imageName: image ))
-    //                }
-    //            }
-    //
-    //            self.songs = newSongs
-    //            self.tableView.reloadData()
-    //        }
-    //    }
-}
-    
-    extension RoomViewController: UITableViewDelegate, UITableViewDataSource {
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return songs.count
-        }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let song = songs[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath)
-            cell.textLabel?.text = "\(song.title) by \(song.artist)"
-            return cell
-         
-        }
-    }
-    
-    
-    
+    }  }

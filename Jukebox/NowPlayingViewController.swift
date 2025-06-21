@@ -81,7 +81,7 @@ class NowPlayingViewController: UIViewController{
         }
     }
     
-    //Song player
+    // MARK: - Song player
     func playSong(from urlString: String, fromTime: TimeInterval = 0) {
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
@@ -123,7 +123,7 @@ class NowPlayingViewController: UIViewController{
     
     
     
-    // Nav buttons for songs
+    // MARK: - Nav buttons for songs
     @IBAction func playPauseTapped(_ sender: UIButton) {
         isPlaying.toggle()
             
@@ -193,7 +193,7 @@ class NowPlayingViewController: UIViewController{
     
     
     
-    //Song name and Artist name
+    // MARK: - Song name and Artist name
     func animateMarqueeLoop() {
         guard let scrollView = marqueeLabel.superview else { return }
         
@@ -216,7 +216,7 @@ class NowPlayingViewController: UIViewController{
     }
     
     
-    //Song Duration and time moving
+    // MARK: - Song Duration and time moving
     func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
@@ -240,7 +240,7 @@ class NowPlayingViewController: UIViewController{
         timerManager.start(from: currentTime, duration: song.duration)
     }
     
-    //Image handles
+    // MARK: - Image handler
     func loadImage(from urlString: String) {
         guard let url = URL(string: urlString) else { return }
         
@@ -259,11 +259,12 @@ class NowPlayingViewController: UIViewController{
         guard let averageColor = image.averageColor else { return }
         
         UIView.animate(withDuration: 0.5) {
-            self.view.backgroundColor = averageColor.withAlphaComponent(0.4)
+            self.view.backgroundColor = averageColor.withAlphaComponent(0.8)
         }
     }
     
     
+    // MARK: - Volume handler
     @IBAction func volumeChanged(_ sender: UISlider) {
         audioPlayer?.volume = sender.value
     }
@@ -276,7 +277,10 @@ class NowPlayingViewController: UIViewController{
         audioPlayer?.volume = 1.0
         volumeSlider.value = 1.0
     }
+    
 }
+
+
     extension UIImage {
         var averageColor: UIColor? {
             guard let inputImage = CIImage(image: self) else { return nil }
