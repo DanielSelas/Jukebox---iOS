@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
 
     func styleJukeboxLabel() {
         jukeboxLabel.text = "Jukebox"
-        jukeboxLabel.font = UIFont(name: "SnellRoundhand-Bold", size: 58) ?? UIFont.systemFont(ofSize: 48, weight: .bold)
+        jukeboxLabel.font = UIFont(name: "ChalkboardSE-Bold", size: 58) ?? UIFont.systemFont(ofSize: 48, weight: .bold)
         jukeboxLabel.layer.shadowColor = UIColor.white.cgColor
         jukeboxLabel.layer.shadowRadius = 10
         jukeboxLabel.layer.shadowOpacity = 3.0
