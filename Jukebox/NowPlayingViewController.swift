@@ -26,8 +26,13 @@ class NowPlayingViewController: UIViewController{
     
     var isPlaying = false
     var currentSongIndex = 0
-    var songs: [Song] = []
+//    var songs: [Song] = []
     
+    @IBOutlet weak var playlistTitleLabel: UILabel!
+    var playlist: Playlist?
+    var songs: [Song] {
+        return playlist?.songs ?? []
+    }
     
     let timerManager = SongTimerManager()
     var currentTime: TimeInterval = 0
@@ -36,52 +41,70 @@ class NowPlayingViewController: UIViewController{
     override func viewDidLoad() {
         
         super.viewDidLoad()
+
+          progressView.transform = CGAffineTransform(scaleX: 1.0, y: 0.2)
+          volumeSlider.value = 1.0
+
+          do {
+              try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+              try AVAudioSession.sharedInstance().setActive(true)
+          } catch {
+              print("⚠️ Audio session error: \(error)")
+          }
+
+          print("📀 NowPlaying loaded with playlist: \(playlist?.name ?? "nil")")
+          
+          if let name = playlist?.name {
+              playlistTitleLabel.text = "Now Playing: \(name)"
+          }
+
+          if !songs.isEmpty {
+              currentSongIndex = 0
+              updateNowPlaying()
+          } else {
+              print("❌ No songs in playlist")
+          }
+
         
-        progressView.transform = CGAffineTransform(scaleX: 1.0, y: 0.2)
-        volumeSlider.value = 1.0
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("⚠️ Audio session error: \(error)")
-        }
         
         //Database initate
 //        let seeder = SongSeeder()
 //        seeder.seedSongs()
         
-        loadSongsFromDatabase()
 
+//        loadSongsFromDatabase()
+        
     }
     
+    // MARK: - Load all song in data base
     
-    func loadSongsFromDatabase() {
-        let dbRef = Database.database().reference()
-        dbRef.child("Library").observeSingleEvent(of: .value) { snapshot in
-            var loadedSongs: [Song] = []
-            
-            for child in snapshot.children {
-                if let snap = child as? DataSnapshot,
-                   let dict = snap.value as? [String: Any],
-                   let title = dict["title"] as? String,
-                   let artist = dict["artist"] as? String,
-                   let imageURL = dict["imageURL"] as? String,
-                   let duration = dict["duration"] as? Int,
-                   let audioURL = dict["audioURL"] as? String{
-                    
-                    let song = Song(title: title, artist: artist, imageURL: imageURL, duration: TimeInterval(duration), audioURL: audioURL)
-                    loadedSongs.append(song)
-                }
-            }
-            
-            self.songs = loadedSongs
-            self.currentSongIndex = 0
-            self.updateNowPlaying()
-        }
-    }
+//    func loadSongsFromDatabase() {
+//        let dbRef = Database.database().reference()
+//        dbRef.child("Library").observeSingleEvent(of: .value) { snapshot in
+//            var loadedSongs: [Song] = []
+//            
+//            for child in snapshot.children {
+//                if let snap = child as? DataSnapshot,
+//                   let dict = snap.value as? [String: Any],
+//                   let title = dict["title"] as? String,
+//                   let artist = dict["artist"] as? String,
+//                   let imageURL = dict["imageURL"] as? String,
+//                   let duration = dict["duration"] as? Int,
+//                   let audioURL = dict["audioURL"] as? String{
+//                    
+//                    let song = Song(title: title, artist: artist, imageURL: imageURL, duration: TimeInterval(duration), audioURL: audioURL)
+//                    loadedSongs.append(song)
+//                }
+//            }
+//            
+//            self.songs = loadedSongs
+//            self.currentSongIndex = 0
+//            self.updateNowPlaying()
+//        }
+//    }
     
     // MARK: - Song player
+    
     func playSong(from urlString: String, fromTime: TimeInterval = 0) {
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
@@ -98,7 +121,17 @@ class NowPlayingViewController: UIViewController{
     }
     
     func updateNowPlaying() {
+        
+        guard !songs.isEmpty else {
+              print("❌ No songs to play")
+              return
+          }
+        
         let song = songs[currentSongIndex]
+        
+        if let playlistName = playlist?.name {
+              playlistTitleLabel.text = "Now Playing : \(playlistName)"
+          }
         
         marqueeLabel.layer.removeAllAnimations()
         marqueeLabel.text = "\(song.artist) – \(song.title)"
@@ -124,6 +157,7 @@ class NowPlayingViewController: UIViewController{
     
     
     // MARK: - Nav buttons for songs
+    
     @IBAction func playPauseTapped(_ sender: UIButton) {
         isPlaying.toggle()
             
@@ -194,6 +228,7 @@ class NowPlayingViewController: UIViewController{
     
     
     // MARK: - Song name and Artist name
+    
     func animateMarqueeLoop() {
         guard let scrollView = marqueeLabel.superview else { return }
         
@@ -217,6 +252,7 @@ class NowPlayingViewController: UIViewController{
     
     
     // MARK: - Song Duration and time moving
+    
     func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
@@ -241,6 +277,7 @@ class NowPlayingViewController: UIViewController{
     }
     
     // MARK: - Image handler
+    
     func loadImage(from urlString: String) {
         guard let url = URL(string: urlString) else { return }
         

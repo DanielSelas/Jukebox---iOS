@@ -95,14 +95,14 @@
         <!--Now Playing-->
         <scene sceneID="oNb-Rc-QGj">
             <objects>
-                <viewController id="ftz-92-xus" customClass="NowPlayingViewController" customModule="Jukebox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NowPlayingViewController" id="ftz-92-xus" customClass="NowPlayingViewController" customModule="Jukebox" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ECS-Or-bsU">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JDx-Vx-y12">
-                                <rect key="frame" x="71" y="130" width="251" height="251"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JDx-Vx-y12">
+                                <rect key="frame" x="71" y="131" width="251" height="249.66666666666669"/>
+                                <color key="tintColor" systemColor="tintColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="251" id="fcP-el-i32"/>
                                 </constraints>
@@ -224,6 +224,18 @@
                                     <action selector="fullVolTapped:" destination="ftz-92-xus" eventType="touchUpInside" id="7w7-Zu-9Ba"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxd-Af-G3w">
+                                <rect key="frame" x="5" y="49" width="383" height="42.666666666666657"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Playlist">
+                                        <attributes>
+                                            <font key="NSFont" size="30" name="ChalkboardSE-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="x0S-7s-Cz2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -238,6 +250,7 @@
                             <constraint firstItem="0D6-rc-eN5" firstAttribute="leading" secondItem="3VW-t2-b7J" secondAttribute="trailing" constant="1" id="AfP-gt-Pr7"/>
                             <constraint firstItem="JDx-Vx-y12" firstAttribute="leading" secondItem="x0S-7s-Cz2" secondAttribute="leading" constant="71" id="Ax1-OL-ePN"/>
                             <constraint firstItem="Ot9-dn-JPO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3VW-t2-b7J" secondAttribute="trailing" constant="8" symbolic="YES" id="DLX-84-M87"/>
+                            <constraint firstItem="cxd-Af-G3w" firstAttribute="centerX" secondItem="ECS-Or-bsU" secondAttribute="centerX" id="FGG-Eu-1l6"/>
                             <constraint firstItem="3VW-t2-b7J" firstAttribute="top" secondItem="8gU-FH-sm2" secondAttribute="bottom" constant="83.333333333333371" id="Gj0-Yi-8ah"/>
                             <constraint firstItem="JDx-Vx-y12" firstAttribute="centerX" secondItem="UCz-r3-edU" secondAttribute="centerX" id="IF7-Ri-ebf"/>
                             <constraint firstItem="8gU-FH-sm2" firstAttribute="leading" secondItem="x0S-7s-Cz2" secondAttribute="leading" constant="10" id="OHH-CP-C8e"/>
@@ -250,10 +263,13 @@
                             <constraint firstItem="Ot9-dn-JPO" firstAttribute="trailing" secondItem="0D6-rc-eN5" secondAttribute="trailing" constant="54" id="coD-Eg-pbj"/>
                             <constraint firstItem="3VW-t2-b7J" firstAttribute="leading" secondItem="ECS-Or-bsU" secondAttribute="leadingMargin" id="eQq-EL-5ob"/>
                             <constraint firstItem="Ot9-dn-JPO" firstAttribute="trailing" secondItem="8gU-FH-sm2" secondAttribute="trailing" id="hB3-vB-g8y"/>
+                            <constraint firstItem="cxd-Af-G3w" firstAttribute="top" secondItem="x0S-7s-Cz2" secondAttribute="top" constant="49" id="hln-Nw-fSJ"/>
                             <constraint firstItem="x0S-7s-Cz2" firstAttribute="trailing" secondItem="8gU-FH-sm2" secondAttribute="trailing" constant="10" id="pyd-lK-L9H"/>
                             <constraint firstItem="JDx-Vx-y12" firstAttribute="centerX" secondItem="ECS-Or-bsU" secondAttribute="centerX" id="qFm-gm-4dH"/>
                             <constraint firstItem="x0S-7s-Cz2" firstAttribute="bottom" secondItem="fIF-z6-D2e" secondAttribute="bottom" constant="100" id="qPw-kh-V4b"/>
                             <constraint firstItem="0D6-rc-eN5" firstAttribute="centerX" secondItem="fIF-z6-D2e" secondAttribute="centerX" id="rSz-L9-qZt"/>
+                            <constraint firstItem="x0S-7s-Cz2" firstAttribute="trailing" secondItem="cxd-Af-G3w" secondAttribute="trailing" constant="5" id="vZT-1w-54l"/>
+                            <constraint firstItem="cxd-Af-G3w" firstAttribute="leading" secondItem="x0S-7s-Cz2" secondAttribute="leading" constant="5" id="wh3-6Q-ihy"/>
                             <constraint firstItem="3VW-t2-b7J" firstAttribute="baseline" secondItem="Ot9-dn-JPO" secondAttribute="baseline" id="xNQ-m1-Zay"/>
                             <constraint firstItem="0D6-rc-eN5" firstAttribute="top" secondItem="fIF-z6-D2e" secondAttribute="bottom" constant="19.000000000000114" id="zlC-IA-H2V"/>
                         </constraints>
@@ -272,6 +288,7 @@
                         <outlet property="muteButton" destination="3VW-t2-b7J" id="G7F-iD-Yi8"/>
                         <outlet property="nextButton" destination="9j1-BG-grC" id="Vox-VN-tgf"/>
                         <outlet property="playButton" destination="n8y-wb-BS0" id="2KQ-Fk-1r4"/>
+                        <outlet property="playlistTitleLabel" destination="cxd-Af-G3w" id="O7n-zH-9L7"/>
                         <outlet property="previousButton" destination="gh8-eE-fK4" id="S4Z-Z5-fpZ"/>
                         <outlet property="progressView" destination="0Of-Ed-hdY" id="quh-y7-gdn"/>
                         <outlet property="volumeSlider" destination="0D6-rc-eN5" id="d9e-NZ-Nob"/>
@@ -382,7 +399,7 @@
                                         <connections>
                                             <outlet property="expandButton" destination="jw0-Rp-QJb" id="nr4-yn-SOH"/>
                                             <outlet property="numberOfSongsLabel" destination="R4B-a2-Wbn" id="otV-XB-CY8"/>
-                                            <outlet property="playButton" destination="cVf-39-ERW" id="c4r-Wn-RXT"/>
+                                            <outlet property="playButton" destination="cVf-39-ERW" id="NNL-Ca-PA8"/>
                                             <outlet property="playlistImageView" destination="IvT-fy-tUM" id="ks6-Sp-FHR"/>
                                             <outlet property="playlistNameLabel" destination="O4F-nN-VHY" id="0nf-9h-eM3"/>
                                         </connections>
@@ -547,6 +564,7 @@
         <image name="backward.fill" catalog="system" width="128" height="76"/>
         <image name="book.circle" catalog="system" width="128" height="123"/>
         <image name="forward.fill" catalog="system" width="128" height="76"/>
+        <image name="music.note" catalog="system" width="96" height="128"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <image name="play.circle" catalog="system" width="128" height="123"/>
         <image name="play.fill" catalog="system" width="120" height="128"/>
@@ -565,6 +583,9 @@
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
