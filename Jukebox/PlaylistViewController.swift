@@ -154,8 +154,10 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Button Actions
     
     @objc func playPlaylist(_ sender: UIButton) {
-        let playlist = playlists[sender.tag]
-        print("🎵 Trying to play playlist: \(playlist.name) with \(playlist.songs.count) songs")
+        var playlist = playlists[sender.tag] 
+        playlist.songs.shuffle()
+
+        print("🎵 Playing shuffled playlist: \(playlist.name) with \(playlist.songs.count) songs")
 
         guard let tabBarController = self.tabBarController,
               let viewControllers = tabBarController.viewControllers else {
@@ -166,11 +168,9 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
         for vc in viewControllers {
             if let navVC = vc as? UINavigationController,
                let nowPlayingVC = navVC.viewControllers.first as? NowPlayingViewController {
-
                 nowPlayingVC.playlist = playlist
                 nowPlayingVC.currentSongIndex = 0
-                nowPlayingVC.updateNowPlaying()  // ⭐ חשוב!
-                
+                nowPlayingVC.updateNowPlaying()
                 tabBarController.selectedViewController = navVC
                 return
             }
@@ -178,8 +178,7 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
             if let nowPlayingVC = vc as? NowPlayingViewController {
                 nowPlayingVC.playlist = playlist
                 nowPlayingVC.currentSongIndex = 0
-                nowPlayingVC.updateNowPlaying()  // ⭐ חשוב!
-                
+                nowPlayingVC.updateNowPlaying()
                 tabBarController.selectedViewController = nowPlayingVC
                 return
             }
