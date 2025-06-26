@@ -254,7 +254,7 @@ class NowPlayingViewController: UIViewController {
         guard let averageColor = image.averageColor else { return }
 
         UIView.animate(withDuration: 0.5) {
-            self.view.backgroundColor = averageColor.withAlphaComponent(0.8)
+            self.view.backgroundColor = averageColor.withAlphaComponent(0.7)
         }
     }
 

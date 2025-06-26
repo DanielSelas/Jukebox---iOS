@@ -23,13 +23,9 @@ class PlaylistCell: UITableViewCell {
         numberOfSongsLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         numberOfSongsLabel.textColor = .gray
         
-        playButton.tintColor = .white
-        playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
-        playButton.imageView?.contentMode = .scaleAspectFit
         playButton.contentHorizontalAlignment = .fill
         playButton.contentVerticalAlignment = .fill
         
-        expandButton.setTitle("Details", for: .normal)
         expandButton.setTitleColor(.systemBlue, for: .normal)
         expandButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
     }
