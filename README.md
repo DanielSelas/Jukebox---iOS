@@ -1,23 +1,30 @@
-🎶 Jukebox
+# 🎶 Jukebox
 
+## Overview  
 Jukebox is a music-focused iOS app developed as a final project for an iOS development course. It demonstrates practical integration of Firebase Realtime Database, combined with elegant UI using UIKit and Storyboards. The app allows users to browse songs stored in Firebase, organize them into playlists, and play music in a clean and intuitive interface.
 
-🚀 Purpose  
+---
+
+## 🚀 Purpose  
 This app was built as a final project assignment requiring the use of Firebase. Jukebox simulates a personal music library experience, where all songs and playlists are stored in Firebase and accessed via a user-friendly mobile interface.
 
-👥 Target Audience  
+---
+
+## 👥 Target Audience  
 The app is suitable for anyone who enjoys music and wants a simple, smooth experience browsing and playing songs stored in the cloud.
 
-☁️ Store Model  
+---
+
+## ☁️ Store Model  
 There is no user sharing or accounts. All songs and playlists are stored in the cloud (Firebase), but the app presents them as “my music”. This includes:
 - All songs I saved to Firebase  
 - My personal playlists created in Firebase
 
 ---
 
-✨ Features
+## ✨ Features
 
-🔐 **Login Screen**  
+### 🔐 Login Screen  
 Lets the user enter a room name (used internally).
 
 <p align="center">
@@ -27,7 +34,7 @@ Lets the user enter a room name (used internally).
 
 ---
 
-🏠 **Main Interface (Tab Bar)**  
+### 🏠 Main Interface (Tab Bar)  
 - **Library Tab** – Browse all songs from Firebase  
 - **Playlist Tab** – View custom playlists with songs  
 - **Now Playing Tab** – See and control the currently playing track  
@@ -38,7 +45,7 @@ Lets the user enter a room name (used internally).
 
 ---
 
-📚 **Song Library**  
+### 📚 Song Library  
 Alphabetically or shuffled sorted list of songs from Firebase.  
 Each song displays:
 - Artwork  
@@ -53,7 +60,7 @@ Each song displays:
 
 ---
 
-🎼 **Playlist**  
+### 🎼 Playlist  
 Each playlist has a name and cover image (from a URL).  
 Songs are distributed across playlists.  
 Users can:
@@ -68,7 +75,7 @@ Users can:
 
 ---
 
-▶️ **Now Playing**  
+### ▶️ Now Playing  
 Full-screen playback view:
 - Album artwork in the center (grows/shrinks based on playback)  
 - Animated scrolling song + artist name  
@@ -83,7 +90,7 @@ Full-screen playback view:
 
 ---
 
-🧰 **Technologies Used**
+## 🧰 Technologies Used
 - Language: Swift (UIKit)  
 - Database: Firebase Realtime Database  
 - UI: Storyboards, AutoLayout, TableViews  
@@ -93,7 +100,7 @@ Full-screen playback view:
 
 ---
 
-🏗️ **Project Structure**
+## 🏗️ Project Structure
 - `LoginViewController`: Handles user login (basic version)  
 - `LibraryViewController`: Displays all songs saved in Firebase  
 - `PlaylistViewController`: Shows playlists and allows interaction  
