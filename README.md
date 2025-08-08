@@ -3,10 +3,11 @@
 Jukebox is a music-focused iOS app developed as a final project for an iOS development course. It demonstrates practical integration of Firebase Realtime Database, combined with elegant UI using UIKit and Storyboards. The app allows users to browse songs stored in Firebase, organize them into playlists, and play music in a clean and intuitive interface.
 
 ---
-## 🎥 Demo  
+## 🎥 Demo
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/a056b9fc-a847-42ad-b564-1b6e0ff79c15" controls></video>
+  <video src="https://github.com/user-attachments/assets/a056b9fc-a847-42ad-b564-1b6e0ff79c15" controls width="300"></video>
 </p>
+
 ---
 ## 🚀 Purpose  
 This app was built as a final project assignment requiring the use of Firebase. Jukebox simulates a personal music library experience, where all songs and playlists are stored in Firebase and accessed via a user-friendly mobile interface.
