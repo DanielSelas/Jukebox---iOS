@@ -4,9 +4,9 @@ Jukebox is a music-focused iOS app developed as a final project for an iOS devel
 
 ---
 ## 🎥 Demo
-<p align="center">
+<div align="center">
   <video src="https://github.com/user-attachments/assets/a056b9fc-a847-42ad-b564-1b6e0ff79c15" controls width="300"></video>
-</p>
+</div>
 
 ---
 ## 🚀 Purpose  
